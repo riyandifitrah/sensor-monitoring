@@ -100,6 +100,7 @@
     const pageBtns  = document.getElementById('page-buttons');
     const searchInput = document.getElementById('search-input');
     const searchBtn   = document.getElementById('search-btn');
+    const resetBtn = document.getElementById('reset-btn'); // <-- 1. Tambahkan selector tombol reset
 
     let currentPage  = 1;
     let totalPages   = 1;
@@ -218,6 +219,14 @@
             loadPage(1);
         }
     });
+
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+            searchInput.value = ''; // Mengosongkan text input pencarian
+            currentSearch = '';     // Mengosongkan variable filter pencarian
+            loadPage(1);            // Memuat kembali data halaman pertama dari awal
+        });
+    }
 
     loadPage(1);
 })();

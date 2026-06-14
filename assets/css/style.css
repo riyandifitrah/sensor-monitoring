@@ -9,6 +9,9 @@
     --primary-light:  #dbeafe;
     --primary-muted:  #eff6ff;
 
+    --primary-red:    #dc2626;
+    --primary-red-dark:#b81e1e;
+
     /* Sidebar */
     --sidebar-bg:     #0f172a;
     --sidebar-hover:  #1e293b;
@@ -447,6 +450,22 @@ html, body {
     box-shadow: 0 2px 8px rgba(37,99,235,0.3);
 }
 
+.btn-reset-filter {
+    padding: 8px 20px;
+    background: var(--primary-red);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, box-shadow 0.15s;
+}
+
+.btn-reset-filter:hover {
+    background: var(--primary-red-dark);
+    box-shadow: 0 2px 8px rgba(37,99,235,0.3);
+}
 /* ---- Table Card ---- */
 .table-card {
     background: var(--card-bg);
