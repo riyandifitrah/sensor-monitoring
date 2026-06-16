@@ -2,7 +2,7 @@
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'sensor_monitoring');
 define('DB_USER', 'root');
-define('DB_PASS', 'hijiDua3');
+define('DB_PASS', '');
 define('DB_CHARSET', 'utf8mb4');
 
 function getDB(): PDO {

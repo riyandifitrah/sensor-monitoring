@@ -52,14 +52,35 @@ function shoulderRight(float $val, float $a, float $b): float {
 }
 
 // Membership suhu
-$suhu_dingin  = shoulderLeft($suhu,  15.0, 22.0);
-$suhu_nyaman  = trapezoid($suhu,     18.0, 22.0, 26.0, 30.0);
-$suhu_panas   = shoulderRight($suhu, 27.0, 32.0);
+// ≤18     : dingin
+// 18–30   : normal penuh
+// ≥30     : panas
+// Makna:
+// ≤18 = 1 (pasti dingin)
+// 18–20 = turun bertahap
+// ≥20 = 0
+$suhu_dingin = shoulderLeft($suhu, 18, 20);
+// Makna:
+// 18–20 = naik
+// 20–28 = full nyaman (μ = 1)
+// 28–30 = turun
+$suhu_nyaman = trapezoid($suhu, 18, 20, 28, 30);
+// Makna:
+// ≤28 = 0
+// 28–30 = naik
+// ≥30 = 1
+$suhu_panas = shoulderRight($suhu,28,30);
 
 // Membership kelembaban
-$kel_kering   = shoulderLeft($kelembaban,  35.0, 45.0);
-$kel_nyaman   = trapezoid($kelembaban,     38.0, 45.0, 58.0, 65.0);
-$kel_lembab   = shoulderRight($kelembaban, 58.0, 68.0);
+$kel_kering = shoulderLeft($kelembaban, 40, 45);
+// Makna:
+// 45–55 = kondisi ideal (μ = 1)
+// 40–45 & 55–60 = transisi
+$kel_nyaman = trapezoid($kelembaban, 40, 45, 55, 60);
+// Makna:
+// ≤40 = kering penuh
+// 40–45 = transisi
+$kel_lembab = shoulderRight($kelembaban, 55, 60);
 
 // Rule base → defuzzifikasi centroid sederhana
 $r_nyaman   = min($suhu_nyaman, $kel_nyaman);
