@@ -1,26 +1,36 @@
 /*
  * Sensor Monitoring System — Arduino Uno R3
- * Hardware : Arduino Uno R3 + Ethernet Shield W5100 + DHT22 + LCD I2C 16x2
+ * Hardware : Arduino Uno R3 + Modul W5500 + DHT11 + LCD I2C 16x2
  *            + 3x LED (Hijau, Kuning, Merah)
  *
- * Wiring:
- *   DHT22      → VCC=5V, GND=GND, DATA=D2
+ * Wiring Modul W5500 → Arduino Uno R3:
+ *   VCC  → 3.3V  (cek label modul — ada yang support 5V jika ada LDO onboard)
+ *   GND  → GND
+ *   MISO → D12
+ *   MOSI → D11
+ *   SCLK → D13
+ *   CS   → D10
+ *   RST  → (opsional) D9 atau biarkan kosong
+ *   INT  → biarkan kosong
+ *
+ * Wiring lainnya:
+ *   DHT11      → VCC=5V, GND=GND, DATA=D2
  *   LCD I2C    → VCC=5V, GND=GND, SDA=A4, SCL=A5
- *   Ethernet   → tancap di atas Arduino (SPI: D10,D11,D12,D13 — jangan pakai pin ini)
  *   LED Hijau  → D5 → resistor 220Ω → GND   (Nyaman)
  *   LED Kuning → D6 → resistor 220Ω → GND   (Waspada)
  *   LED Merah  → D7 → resistor 220Ω → GND   (Bahaya)
  *
  * Alur data:
- *   1. Arduino baca DHT22 → suhu + kelembaban (raw)
+ *   1. Arduino baca DHT11 → suhu + kelembaban (raw)
  *   2. Kirim ke PHP via HTTP GET
  *   3. PHP hitung Fuzzy Logic → balas JSON { status, nilai_fuzzy, ... }
  *   4. Arduino parse response → tampil di LCD + nyalakan LED yang sesuai
  *
  * Libraries (Arduino IDE Library Manager):
+ *   - "Ethernet" by Arduino (built-in, v2 sudah support W5500)
  *   - "DHT sensor library" by Adafruit  (+ Adafruit Unified Sensor)
  *   - "LiquidCrystal I2C" by Frank de Brabander
- *   - SPI, Ethernet, Wire  (built-in)
+ *   - SPI, Wire  (built-in)
  */
 
 #include <SPI.h>
@@ -33,7 +43,8 @@
 //  KONFIGURASI — sesuaikan sebelum upload
 // ============================================================
 #define DHT_PIN    2
-#define DHT_TYPE   DHT22
+// #define DHT_TYPE   DHT22
+#define DHT_TYPE   DHT11   // ganti dari DHT22
 
 #define LCD_ADDR   0x27   // coba 0x3F jika LCD tidak tampil
 #define LCD_COLS   16
